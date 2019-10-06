@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>文章管理</title>
+		<link rel="stylesheet" href="../static/css/amazeui.min.css" />
+		<link rel="stylesheet" href="../static/css/admin.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+            //开始加载
+            $(function(){
+                requestAjax(0,5)
+                selectPage();
+
+                $("#add").click(function () {
+                    window.location.href="add"
+                })
+            });
+
+            //查询最大页数
+            function selectPage(){
+                $.ajax({
+                    "url":"selectPage",
+                    "success":function(result){
+                        pageSplit(result.data);
+                    },
+                    "dataType":"json"
+                });
+            }
+
+            function pageSplit(page){
+                var pageMax=page;
+                $("li").on("click",function(){
+                    if($(this).text()*5>pageMax){
+                        requestAjax(($(this).text()-1)*5,6)
+                    }else{
+                        if($(this).text()==1){
+                            requestAjax($(this).text()*5-5,$(this).text()*5);
+                        }
+                        else
+                            requestAjax($(this).text()*5-5,5);
+                    }
+                });
+            }
+            //发送ajax请求显示
+            function requestAjax(pageStart,pageEnd){
+                $.ajax({
+                    "data":{pageStart:pageStart,pageEnd:pageEnd},
+                    "url":"list",
+                    success:function(list){
+                        if(list.data!=null)//权限管理
+                            setTableBodyRows(list);
+                        else{
+                            alert("请登录");
+                            location.href="toLogin";
+                        }
+                    },
+                    "dataType":"json"
+                });
+            }
+
+            //显示页面
+            function setTableBodyRows(list){
+                var data=list.data;
+                var tBody=$("#tbodyId");
+                if(data.length!=0){//有数据则不清空
+                    tBody.empty();
+                }
+                for(var i in data){
+                    var tr=$("<tr></tr>");
+                    tr.data("id",data[i].articleId);
+                    tr.data("valid",data[i].valid);
+                    var tds="<td><input type='radio' name='radioId' value='"+data[i].articleId+"' ></td>"+
+                        "<td>"+data[i].title+"</td>"+
+                        "<td>"+data[i].subtitle+"</td>"+
+						"<td><textarea class=\"form-control\" id=\"copyright\" name=\"copyright\" rows=\"3\" disabled=\"disabled\" style='resize: none'>"+data[i].content+"</textarea></td>"+
+						"<td>" +
+						/*"<a  class=\"btn btn-warning\" href=deleteArticle?id="+data[i].articleId+">删除</a><a  class=\"btn btn-warning\" href=update?id="+data[i].articleId+">修改</a>" +*/
+						"<a  href=deleteArticle?id="+data[i].articleId+"><button class=\"am-btn am-btn-default am-btn-xs am-text-secondary\"><span class=\"am-icon-pencil-square-o\"></span>删除</button>\n</a>" +
+						"<a  href=update?id="+data[i].articleId+"><button class=\"am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only\"><span class=\"am-icon-trash-o\"></span>编辑</button>\n</a>" +
+						"</td>"
+                    ;
+                    tr.append(tds);
+                    tBody.append(tr);
+                }
+            }
+
+		</script>
+	</head>
+
+	<body>
+	<div class="container">
+		<div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">文章管理</strong><small></small></div>
+		</div>
+
+		<hr>
+		<div class="am-g">
+			<div class="am-u-sm-12 am-u-md-6">
+				<div class="am-btn-toolbar">
+					<div class="am-btn-group am-btn-group-xs">
+						<button type="button" class="am-btn am-btn-default" id="add"><span class="am-icon-plus"></span> 新增</button>
+					</div>
+				</div>
+			</div>
+			<div class="am-u-sm-12 am-u-md-3">
+
+			</div>
+			<div class="am-u-sm-12 am-u-md-3">
+				<div class="am-input-group am-input-group-sm">
+					<input type="text" class="am-form-field">
+					<span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button">搜索</button>
+          </span>
+				</div>
+			</div>
+		</div>
+
+		<table class="table table-striped down">
+			<thead>
+			<tr>
+				<th>选择框</th>
+				<th>标题</th>
+				<th>副标题</th>
+				<th>内容</th>
+				<th>删除选项</th>
+			</tr>
+			</thead>
+			<tbody id="tbodyId">
+			<!--查询到的是数据展示-->
+			</tbody>
+		</table>
+
+		<!--页数-->
+		<div class="col-sm-8">
+			<ul class="pagination show-long  pagination-lg ">
+				<li class="page-item"><a id="1" class="page-link" href="#">1</a></li>
+				<li class="page-item"><a id="2" class="page-link" href="#">2</a></li>
+				<li class="page-item"><a id="3" class="page-link" href="#">3</a></li>
+				<li class="page-item"><a id="4" class="page-link" href="#">4</a></li>
+				<li class="page-item"><a id="5" class="page-link" href="#">5</a></li>
+			</ul>
+		</div>
+	</div>
+
+	</body>
+</html>

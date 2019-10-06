@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--解决乱码问题-->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!-- 引入 线上的 Bootstrap 的样式-->
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.0/css/bootstrap.css" rel="stylesheet">
+    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://cdn.bootcss.com/jquery/3./4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.0/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#but").click(function () {
+                var title = $("#title").val();
+                var subtitle = $("#subtitle").val();
+                var content = $("#content").val();
+                var json={
+                    title:title,
+                    subtitle:subtitle,
+                    content:content
+                }
+                $.ajax({
+                    "url":"addArticle",
+                    "data":json,
+                    "type":"get",
+                    "contentType":"application/json",
+                    "success":function(data){
+                        alert(data);
+                        if (data > 0){
+                            alert("添加文章成功！");
+                        } else {
+                            alert("添加失败！");
+                        }
+                    },
+                    "dataType":"json"
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<div id="login">
+    <div class="container">
+        <h4>添加文章</h4>
+
+        <form id="personInfo" method="get">
+            <div class="form-group">
+                <input class="form-control" id="id" name="id" type="hidden" value="50" />
+            </div>
+
+            <div class="form-group">
+                <label class="tbposi">文章标题：</label>
+                <input class="form-control" id="title" name="title" type="text" />
+            </div>
+
+            <div class="form-group">
+                <label class="tbposi">文章副标题：</label>
+                <input class="form-control" id="subtitle" name="subtitle" type="text" />
+            </div>
+
+            <div class="form-group">
+                <label class="tbposi">文章内容:</label>
+                <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+            </div>
+            <a class="btn btn-primary" id="but">提交</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

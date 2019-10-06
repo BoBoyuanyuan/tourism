@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--开启注解扫描,只扫描Controller注解-->
+    <context:component-scan base-package="com.tourism"/>
+
+    <!--springMVC的注解支持-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!-- 配置Fastjson支持 -->
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <list>
+                        <value>WriteMapNullValue</value>
+                        <value>QuoteFieldNames</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 配置视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/common/" />
+        <property name="suffix" value=".html" />
+    </bean>
+
+    <!--过滤静态资源-->
+    <mvc:resources location="static/" mapping="/static/**"/>
+    <mvc:resources location="WEB-INF/static/" mapping="/static/**" />
+<!--    <mvc:resources location="WEB-INF/js/" mapping="/js/**" />
+    <mvc:resources location="WEB-INF/images/" mapping="/images/**" />
+    <mvc:resources location="WEB-INF/fonts/" mapping="/fonts/**" />
+    <mvc:resources location="WEB-INF/myplugs/" mapping="/myplugs/**" />-->
+
+    <!-- 文件上传配置 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 上传文件的编码 -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <!--上传文件的最大大小 -->
+        <property name="maxUploadSize" value="104857600"></property>
+        <!--最大内存大小-->
+        <property name="maxInMemorySize" value="40960"></property>
+        <!--文件或参数访问时延迟解决多部分请求-->
+        <property name="resolveLazily" value="true"></property>
+    </bean>
+</beans>

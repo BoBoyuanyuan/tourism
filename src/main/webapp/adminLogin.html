@@ -8,14 +8,15 @@
     <title>后台登录</title>
     <link href="static/admin/layui/css/layui.css" rel="stylesheet" type="text/css"/>
     <link href="static/admin/css/login.css" rel="stylesheet" type="text/css"/>
-    <script src="static/public/jquery/jquery-3.4.1.min.js"></script>
+
 </head>
 
 <body>
-<div class="m-login-bg">
+<div id="box">
     <div class="m-login">
-        <h3>后台系统登录</h3>
-        <div class="m-login-warp">
+        <img src="static/public/images/logo2.png" height="120"
+                                                               width="380"/>
+        <div class="m-login-warp" style="background-color: rgba(255,255,255,0.19)">
             <form class="layui-form">
                 <div class="layui-form-item">
                     <input autocomplete="off" class="layui-input" lay-verify="required" name="username" placeholder="用户名"
@@ -38,6 +39,8 @@
         <p class="copyright">Copyright 2019 此游网版权所有</p>
     </div>
 </div>
+<script charset="utf-8" src="static/public/js/background.js" type="text/javascript"></script>
+<script charset="utf-8" src="static/public/js/particles.js" type="text/javascript"></script>
 <script charset="utf-8" src="static/admin/layui/layui.js" type="text/javascript"></script>
 <script>
     layui.use(['form', 'layedit', 'laydate'], function () {

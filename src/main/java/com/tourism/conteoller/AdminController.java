@@ -48,7 +48,7 @@ public class AdminController {
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
     @ResponseBody
     public String login( String username,String password){
-       log.info(username,password);
+        log.info(username,password);
         int byUP = 1;//iAdminService.findByUP(username,password);
         if (byUP > 0){
             return "1";

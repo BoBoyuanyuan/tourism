@@ -5,15 +5,16 @@ layui.config({
         layer = parent.layer === undefined ? layui.layer : parent.layer,
         laypage = layui.laypage,
         $ = layui.jquery;
+    //形成
     var siteinfo;
     form.on("submit(siteinfo)", function (data) {
         siteinfo = '{"logo":"' + $(".logo").val() + '",';  //网站logo
-        siteinfo = '{"title":"' + $(".title").val() + '",';  //网站标题
+        siteinfo = '"title":"' + $(".title").val() + '",';  //网站标题
         siteinfo += '"subTitle":"' + $(".subTitle").val() + '",';	 //副标题
         siteinfo += '"domain":"' + $(".domain").val() + '",'; //网站地址
         siteinfo += '"copyright":"' + $(".copyright").val() + '",'; //版权信息
         siteinfo += '"description":"' + $(".description").val() + '",'; //站点描述
-        siteinfo += '"icp":"' + $(".icp").val() + '",'; //网站备案号
+        siteinfo += '"icp":"' + $(".icp").val() + '"},'; //网站备案号
         window.sessionStorage.setItem("siteinfo", siteinfo);
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
@@ -30,8 +31,9 @@ layui.config({
         var data = JSON.parse(window.sessionStorage.getItem("siteinfo"));
         fillData(data);
     } else {
+        //后台数据
         $.ajax({
-            url: "../../json/siteinfo.json",
+            url: "quireInfo",
             type: "get",
             dataType: "json",
             success: function (data) {

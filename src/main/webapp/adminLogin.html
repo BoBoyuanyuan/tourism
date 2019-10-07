@@ -8,6 +8,7 @@
     <title>后台登录</title>
     <link href="static/admin/layui/css/layui.css" rel="stylesheet" type="text/css"/>
     <link href="static/admin/css/login.css" rel="stylesheet" type="text/css"/>
+    <script src="static/public/jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
@@ -17,21 +18,12 @@
         <div class="m-login-warp">
             <form class="layui-form">
                 <div class="layui-form-item">
-                    <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="用户名"
+                    <input autocomplete="off" class="layui-input" lay-verify="required" name="username" placeholder="用户名"
                            required type="text">
                 </div>
                 <div class="layui-form-item">
                     <input autocomplete="off" class="layui-input" lay-verify="required" name="password" placeholder="密码"
-                           required type="text">
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <input autocomplete="off" class="layui-input" lay-verify="required" name="verity"
-                               placeholder="验证码" required type="text">
-                    </div>
-                    <div class="layui-inline">
-                        <img class="verifyImg" onclick="this.src=this.src+'?c='+Math.random();" src="验证码.jpg"/>
-                    </div>
+                           required type="password">
                 </div>
                 <div class="layui-form-item m-login-btn">
                     <div class="layui-inline">
@@ -51,28 +43,47 @@
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form(),
             layer = layui.layer;
-
-
         //自定义验证规则
-        form.verify({
+      /*  form.verify({
             title: function (value) {
                 if (value.length < 5) {
                     return '请输入正确的用户名';
                 }
             },
             password: [/(.+){6,12}$/, '密码输入有误'],
-            verity: [/(.+){6}$/, '验证码必须是6位'],
 
-        });
+        });*/
 
 
-        //监听提交
+        //提交
         form.on('submit(login)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
+            //检验 数据
+           /* layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
-            })
+            })*/
+            var params = JSON.stringify(data.field);
+            //再次校验数据
+            //alert(params)
+            $.ajax({
+                "url": "admin/login",
+                "data": params,
+                "type": "post",
+                "contentType": "application/json",
+                "success": function (result) {
+                    if (result == 1) {
+                        alert("登录成功！");
+                        window.location.href = "admin/index"
+                    } else {
+                        alert("管理员不存在");
+                    }
+                },
+                "dataType": "json"
+            });
+            //防止页面跳转
             return false;
         });
+
+
 
     });
 </script>

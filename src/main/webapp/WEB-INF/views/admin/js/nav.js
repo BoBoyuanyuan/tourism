@@ -4,7 +4,7 @@ var navs = [{
     "href": "page/main.html",
     "spread": false
 }, {
-    "title": "文章发布",
+    "title": "文章列表",
     "icon": "&#xe642;",
     "href": "page/article/articleList.html",
     "spread": false

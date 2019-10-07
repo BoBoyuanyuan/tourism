@@ -1,6 +1,7 @@
 package com.tourism.mapper;
 
 import com.tourism.entity.Admin;
+import org.apache.ibatis.annotations.Param;
 
 public interface IAdminMapper {
     int deleteByPrimaryKey(Integer aId);
@@ -16,4 +17,6 @@ public interface IAdminMapper {
     int updateByPrimaryKey(Admin record);
 
     int findByUP(String username,String password);
+
+    int idByName(@Param("username")String username);
 }

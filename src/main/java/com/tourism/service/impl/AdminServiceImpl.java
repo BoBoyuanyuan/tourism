@@ -46,4 +46,9 @@ public class AdminServiceImpl implements IAdminService {
     public int findByUP(String username,String password) {
         return adminMapper.findByUP(username,password);
     }
+
+    @Override
+    public int idByName(String username) {
+        return  adminMapper.idByName(username);
+    }
 }

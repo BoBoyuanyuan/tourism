@@ -18,4 +18,6 @@ public interface IAdminService {
 
     int findByUP(String username,String password);
 
+    int idByName(String username);
+
 }

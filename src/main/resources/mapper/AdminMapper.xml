@@ -91,4 +91,12 @@
     from admin
     WHERE username=#{param1,jdbcType=VARCHAR} and password=#{param2,jdbcType=VARCHAR}
   </select>
+
+  <select id="idByName" parameterType="com.tourism.entity.Admin" resultType="int">
+    select
+    a_id
+    from admin
+    WHERE username=#{username}
+  </select>
+
 </mapper>

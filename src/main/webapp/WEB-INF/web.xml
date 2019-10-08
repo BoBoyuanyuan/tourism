@@ -11,7 +11,7 @@
 
   <!--首页-->
   <welcome-file-list>
-      <welcome-file>adminLogin.html</welcome-file>
+      <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
   <!--配置spring监听器,默认只加载WEB-INF目录的applicationContext.xml配置文件-->

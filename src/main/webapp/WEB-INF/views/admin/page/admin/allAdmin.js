@@ -23,7 +23,7 @@ layui.config({
         var index = layui.layer.open({
             title: "添加用户",
             type: 2,
-            content: "addAdmin.html",
+            content: "addAdmin.htm",
             success: function (layero, index) {
                 layui.layer.tips('点击此处返回管理员列表', '.layui-layer-setwin .layui-layer-close', {
                     tips: 3

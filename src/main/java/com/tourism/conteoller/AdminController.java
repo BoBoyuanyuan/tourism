@@ -70,7 +70,7 @@ public class AdminController {
         }
     }
     //修改密码
-    @RequestMapping(value = "/register",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
+    @RequestMapping(value = "/updateKey",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
     @ResponseBody
     public String updateKeyByName( String username, String oldPwd, String Password){
         int i=0;

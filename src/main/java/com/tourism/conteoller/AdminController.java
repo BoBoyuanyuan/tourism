@@ -1,5 +1,6 @@
 package com.tourism.conteoller;
 
+import com.tourism.entity.Admin;
 import com.tourism.service.IAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -48,13 +49,43 @@ public class AdminController {
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
     @ResponseBody
     public String login( String username,String password){
-        log.info(username,password);
+       log.info(username,password);
         int byUP = 1;//iAdminService.findByUP(username,password);
         if (byUP > 0){
             return "1";
         }else {
             return "0";
         }
-
     }
+//添加管理员
+    @RequestMapping(value = "/register",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
+    @ResponseBody
+    public String register( String username, String nickname, String password){
+        Admin admin = new Admin(username,nickname,password);
+        int i = iAdminService.insertSelective(admin);
+        if (i > 0){
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+    //修改密码
+    @RequestMapping(value = "/updateKey",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
+    @ResponseBody
+    public String updateKeyByName( String username, String oldPwd, String Password){
+        int i=0;
+        if (iAdminService.findByUP(username, oldPwd)!=0){
+            //名字找id
+            int id = iAdminService.idByName(username);
+            Admin admin = new Admin(id, Password);
+            i = iAdminService.updateByPrimaryKeySelective(admin);
+        }
+
+        if (i > 0){
+            return "1";
+        }else {
+            return "0";
+        }
+    }
+
 }

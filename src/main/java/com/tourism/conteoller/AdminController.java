@@ -69,7 +69,7 @@ public class AdminController {
             return "0";
         }
     }
-    //修改密码
+    //修改管理员密码
     @RequestMapping(value = "/updateKey",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_UTF8_VALUE )
     @ResponseBody
     public String updateKeyByName( String username, String oldPwd, String Password){
@@ -80,7 +80,6 @@ public class AdminController {
             Admin admin = new Admin(id, Password);
             i = iAdminService.updateByPrimaryKeySelective(admin);
         }
-
         if (i > 0){
             return "1";
         }else {
